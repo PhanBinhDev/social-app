@@ -77,12 +77,12 @@ export default function SearchBar() {
         </div>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant='outline'>
+            <Button variant={'outline'}>
               <Filter className='mr-2 h-4 w-4' />
               Bộ lọc
             </Button>
           </PopoverTrigger>
-          <PopoverContent className='w-80'>
+          <PopoverContent className='w-80' align='end'>
             <div className='grid gap-4'>
               <div className='space-y-2'>
                 <h4 className='font-medium leading-none'>Loại nội dung</h4>
@@ -175,7 +175,11 @@ export default function SearchBar() {
             </div>
           </PopoverContent>
         </Popover>
-        <Button onClick={() => handleSearch(query, filters)}>Tìm kiếm</Button>
+        <Button
+          className='hidden md:block'
+          onClick={() => handleSearch(query, filters)}>
+          Tìm kiếm
+        </Button>
       </div>
       {(filters.contentType !== 'all' ||
         filters.dateRange !== 'anytime' ||

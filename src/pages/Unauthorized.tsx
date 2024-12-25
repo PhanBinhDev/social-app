@@ -21,7 +21,7 @@ export default function Unauthorized() {
             </Link>
           </Button>
           <Button asChild variant='outline' className='w-full'>
-            <Link to='/login'>
+            <Link to='/sign-in'>
               <LockIcon className='mr-2 h-4 w-4' />
               Đăng nhập
             </Link>

@@ -7,7 +7,7 @@ const SignUpPage = lazy(() => import('@/pages/SignUp'))
 const ForgotPasswordPage = lazy(() => import('@/pages/ForgotPassword'))
 const ResetPasswordPage = lazy(() => import('@/pages/ResetPassword'))
 
-const DashboardPage = lazy(() => import('@/pages/Dashboard'))
+const HomePage = lazy(() => import('@/pages/Home'))
 
 export interface RouteConfig {
   path: string
@@ -50,9 +50,16 @@ export const ROUTES: Routes = {
     {
       path: '/',
       label: 'Dashboard',
-      component: DashboardPage,
+      component: HomePage,
       icon: 'dashboard',
       requiredRole: 'user'
+    },
+    {
+      path: '/admin',
+      label: 'Dashboard',
+      component: HomePage,
+      icon: 'dashboard',
+      requiredRole: 'admin'
     }
   ]
 }

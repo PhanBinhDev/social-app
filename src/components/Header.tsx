@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { useAuth } from '@/hooks/use-auth'
 
-import { Input } from '@/components/ui/input'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import {
   Search,
   Bell,
@@ -19,49 +20,35 @@ import {
   Menu,
   LogOut
 } from 'lucide-react'
-import { useAuth } from '@/hooks/use-auth'
+import SearchBar from './Search'
+import Sidebar from './Sidebar'
 
 export default function Header() {
   const [openSearch, setOpenSearch] = useState(false) // State điều khiển Search trên mobile
   const { signOut } = useAuth()
   return (
     <header className='fixed top-0 left-0 right-0 h-auto bg-background border-b border-border z-50'>
-      <div className='flex flex-wrap items-center justify-between gap-4 px-4 py-2 md:flex-nowrap h-16'>
+      <div className='flex flex-wrap items-center justify-between gap-2 px-4 py-2 md:flex-nowrap min-h-16'>
         {/* Left: Logo */}
-        <Button
-          variant='ghost'
-          size='icon'
-          className='md:hidden'
-          // Bạn có thể mở menu ở đây
-        >
-          <Menu />
-        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant='ghost' size='icon' className='md:hidden'>
+              <Menu />
+            </Button>
+          </SheetTrigger>
+          <SheetContent className='p-3 w-60' side={'left'}>
+            <Sidebar />
+          </SheetContent>
+        </Sheet>
 
         {/* Middle: Search bar */}
         {/* Hiện Search trên mobile khi icon được nhấn */}
-        <>
-          <div className='hidden md:block w-72'>
-            <div className='relative'>
-              <Search className='absolute left-2 top-2.5 h-5 w-5 text-muted-foreground' />
-              <Input placeholder='Tìm kiếm...' className='pl-10 w-full' />
-            </div>
+        {/* Mobile Search - Controlled by openSearch state */}
+        {openSearch && (
+          <div className='block md:hidden w-full md:w-auto md:flex-1 order-last md:order-none'>
+            <SearchBar />
           </div>
-
-          {/* Mobile Search - Controlled by openSearch state */}
-          {openSearch && (
-            <div className='block md:hidden w-full md:w-auto md:flex-1 order-last md:order-none'>
-              <div className='relative'>
-                <Search className='absolute left-2 top-2.5 h-5 w-5 text-muted-foreground' />
-                <Input
-                  placeholder='Tìm kiếm...'
-                  className='pl-10 w-full'
-                  onBlur={() => setOpenSearch(false)}
-                  autoFocus
-                />
-              </div>
-            </div>
-          )}
-        </>
+        )}
 
         {/* Right: Icons and Avatar */}
         <div className='ml-auto flex items-center gap-4'>

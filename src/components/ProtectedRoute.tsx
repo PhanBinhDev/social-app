@@ -16,6 +16,11 @@ export function ProtectedRoute({
   const { loading, user } = useAuth()
   const location = useLocation()
 
+  console.log({
+    user: user?.role,
+    requiredRole: requiredRole
+  })
+
   if (loading) {
     return <Loading text='Đang khởi tạo người dùng...' />
   }

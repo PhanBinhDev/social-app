@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 
 import { AuthProvider } from '@/providers/AuthProvider'
 
@@ -7,8 +7,8 @@ import { AuthProvider } from '@/providers/AuthProvider'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 import { RouteConfig, ROUTES } from '@/config/routes'
 import { Loading } from '@/components/loading'
-import { MainLayout } from '@/layouts/MainLayout'
 import AuthLayout from '@/layouts/AuthLayout'
+import Unauthorized from './pages/Unauthorized'
 
 const SignUpConfirmPage = lazy(() => import('@/pages/SignUpConfirmation'))
 const NotFound = lazy(() => import('@/pages/NotFound'))
@@ -46,13 +46,10 @@ function App() {
           {/* Auth routes */}
           <Route element={<AuthLayout />}>{renderRoutes(ROUTES.public)}</Route>
           {/* Protected routes with MainLayout*/}
-          <Route element={<MainLayout />}>
-            {renderRoutes(ROUTES.protected)}
-          </Route>
-
+          <Route element={<Outlet />}>{renderRoutes(ROUTES.protected)}</Route>
+          {/* Default error route */}
           <Route path='/confirmation' element={<SignUpConfirmPage />} />
-
-          {/* Default 404 route */}
+          <Route path='/unauthorized' element={<Unauthorized />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </AuthProvider>
